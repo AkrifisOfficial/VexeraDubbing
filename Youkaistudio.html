@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youkai Studio - Лучшая озвучка аниме</title>
+    <title>VexeraDubbing - Лучшая озвучка аниме</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -26,6 +26,9 @@
             background-color: var(--darker);
             color: var(--light);
             line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
+            background-attachment: fixed;
         }
         
         header {
@@ -61,7 +64,7 @@
         
         .logo h1 {
             font-size: 1.8rem;
-            background: linear-gradient(to right, var(--primary), var(--accent));
+            background: linear-gradient(to right, #ff6b6b, #6a55fa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -128,12 +131,30 @@
             text-align: center;
             margin-bottom: 2rem;
             border-radius: 0 0 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 20%, var(--darker) 150%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
         
         .hero h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         
         .hero p {
@@ -153,6 +174,7 @@
             font-weight: 600;
             transition: all 0.3s;
             border: 2px solid transparent;
+            cursor: pointer;
         }
         
         .btn:hover {
@@ -171,6 +193,11 @@
             background: transparent;
             border-color: var(--accent);
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-small {
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
         }
         
         section {
@@ -211,11 +238,13 @@
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            position: relative;
         }
         
         .anime-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(106, 85, 250, 0.3);
         }
         
         .anime-poster {
@@ -306,6 +335,7 @@
             padding: 2rem 0;
             margin-top: 3rem;
             text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .footer-content {
@@ -422,6 +452,8 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .admin-nav button {
@@ -439,6 +471,227 @@
             font-weight: 600;
         }
         
+        /* Anime Details Page */
+        .anime-details {
+            background: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 2rem;
+        }
+        
+        .anime-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+        
+        .anime-poster-large {
+            width: 300px;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .anime-meta {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .anime-meta h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .anime-meta .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .anime-meta .rating span {
+            background: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .anime-meta .info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .anime-meta .info div {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .anime-meta .genres {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .anime-meta .genre {
+            background: rgba(106, 85, 250, 0.2);
+            color: #b2a5ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .anime-meta .description {
+            line-height: 1.7;
+            color: #d0d0ff;
+            margin-bottom: 1.5rem;
+        }
+        
+        .episodes-list {
+            background: var(--darker);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .episode-card {
+            background: var(--dark);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .episode-card:hover {
+            transform: translateY(-5px);
+            background: rgba(106, 85, 250, 0.1);
+            box-shadow: 0 5px 15px rgba(106, 85, 250, 0.3);
+        }
+        
+        .episode-card.active {
+            background: rgba(106, 85, 250, 0.3);
+            border: 1px solid var(--primary);
+        }
+        
+        .episode-thumb {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .episode-info {
+            padding: 0.8rem;
+        }
+        
+        .episode-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .episode-info .ep-number {
+            color: #a0a0c0;
+            font-size: 0.85rem;
+        }
+        
+        .player-container {
+            background: var(--darker);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 500px;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom right, #2a2139, #1a1a2e);
+            color: #b2a5ff;
+        }
+        
+        .video-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .player-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .episode-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #b2a5ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary);
+        }
+        
+        .vexera-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #6a55fa);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 3;
+        }
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -453,6 +706,24 @@
             .anime-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
+            
+            .anime-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .anime-meta .info {
+                justify-content: center;
+            }
+            
+            .anime-meta .genres {
+                justify-content: center;
+            }
+            
+            .video-player {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -466,8 +737,8 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: var(--primary);"></i>
-                        <h1>Youkai Studio</h1>
+                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: #ff6b6b;"></i>
+                        <h1>VexeraDubbing</h1>
                     </div>
                     <nav>
                         <ul>
@@ -482,8 +753,8 @@
         </header>
         
         <section class="hero">
-            <div class="container">
-                <h2>Лучшая озвучка аниме от Youkai Studio</h2>
+            <div class="hero-content">
+                <h2>Лучшая озвучка аниме от VexeraDubbing</h2>
                 <p>Смотрите любимые аниме в профессиональной озвучке с регулярными обновлениями и высоким качеством перевода. Только эксклюзивный контент!</p>
                 <a href="#" class="btn btn-accent">Смотреть сейчас</a>
             </div>
@@ -491,8 +762,8 @@
         
         <div class="container">
             <div class="search-bar">
-                <input type="text" placeholder="Поиск аниме...">
-                <button><i class="fas fa-search"></i> Найти</button>
+                <input type="text" id="search-input" placeholder="Поиск аниме...">
+                <button id="search-btn"><i class="fas fa-search"></i> Найти</button>
             </div>
             
             <section>
@@ -508,7 +779,7 @@
                 <div class="section-title">
                     <h2>Популярное сейчас</h2>
                 </div>
-                <div class="anime-grid">
+                <div class="anime-grid" id="popular-container">
                     <!-- Популярные аниме -->
                 </div>
             </section>
@@ -517,16 +788,50 @@
         <footer>
             <div class="container">
                 <div class="footer-content">
+                    <div class="logo">
+                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: #ff6b6b;"></i>
+                        <h1>VexeraDubbing</h1>
+                    </div>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-vk"></i></a>
                         <a href="#"><i class="fab fa-telegram"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-discord"></i></a>
                     </div>
-                    <p class="copyright">© 2025 Youkai Studio. Все права на озвучку принадлежат DubClub. Весь видеоконтент принадлежит их правообладателям.</p>
+                    <p class="copyright">© 2025 VexeraDubbing. Все права на озвучку принадлежат VexeraDubbing. Весь видеоконтент принадлежит их правообладателям.</p>
                 </div>
             </div>
         </footer>
+    </div>
+    
+    <!-- Страница аниме -->
+    <div id="anime-page" class="hidden">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: #ff6b6b;"></i>
+                        <h1>VexeraDubbing</h1>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="#" id="back-to-main-from-anime"><i class="fas fa-arrow-left"></i> На главную</a></li>
+                            <li><a href="#"><i class="fas fa-heart"></i> В избранное</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <a href="#" class="back-btn" id="back-to-main-from-details">
+                <i class="fas fa-arrow-left"></i> Назад к каталогу
+            </a>
+            
+            <div id="anime-details-container">
+                <!-- Детали аниме будут добавлены с помощью JavaScript -->
+            </div>
+        </div>
     </div>
     
     <!-- Админ панель -->
@@ -535,8 +840,8 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: var(--primary);"></i>
-                        <h1>Youkai Studio Админ</h1>
+                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: #ff6b6b;"></i>
+                        <h1>VexeraDubbing Админ</h1>
                     </div>
                     <nav>
                         <ul>
@@ -639,8 +944,8 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: var(--primary);"></i>
-                        <h1>Youkai Studio Админ</h1>
+                        <i class="fas fa-dragon" style="font-size: 2.5rem; color: #ff6b6b;"></i>
+                        <h1>VexeraDubbing Админ</h1>
                     </div>
                 </div>
             </div>
@@ -654,53 +959,102 @@
                     <input type="password" id="admin-password" placeholder="Введите пароль администратора">
                 </div>
                 <button id="login-btn" class="btn">Войти</button>
-                <p style="margin-top: 1rem; color: #a0a0c0;">Пароль хранится в коде: "youkaistadmin123"</p>
+                <p style="margin-top: 1rem; color: #a0a0c0;">После введения правильного пароля откроется панель управления сайта</p>
             </div>
         </div>
     </div>
 
     <script>
         // Данные приложения
-        const animeData = [
+        let animeData = JSON.parse(localStorage.getItem('vexeraAnimeData')) || [
             {
                 id: 1,
                 title: "Наруто: Ураганные хроники",
                 poster: "https://images.unsplash.com/photo-1633327941347-6cea1a6cf354?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                episodes: 12
+                description: "Спустя два с половиной года тренировок с Дзирайей Наруто возвращается в Коноху. Он стал сильнее, но его соперники тоже не теряли времени даром. Начинается новый этап жизни Наруто и его друзей.",
+                genre: ["Приключения", "Боевые искусства", "Комедия"],
+                episodes: 12,
+                rating: 8.7,
+                year: 2007,
+                status: "Завершен",
+                episodesList: [
+                    { id: 1, number: 1, title: "Возвращение Наруто", videoUrl: "" },
+                    { id: 2, number: 2, title: "Новая команда 7", videoUrl: "" },
+                    { id: 3, number: 3, title: "Миссия по спасению Кадзукаге", videoUrl: "" },
+                    { id: 4, number: 4, title: "Дзинчурики из Песчаной Деревни", videoUrl: "" }
+                ]
             },
             {
                 id: 2,
                 title: "Атака титанов",
                 poster: "https://images.unsplash.com/photo-1635189779577-555debfa5d0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                episodes: 8
+                description: "Человечество живет в городах, окруженных огромными стенами, защищающими от титанов - гигантских существ, пожирающих людей. Эрен Йегер клянется уничтожить всех титанов после того, как они убили его мать и разрушили его родной город.",
+                genre: ["Драма", "Ужасы", "Фэнтези"],
+                episodes: 8,
+                rating: 9.2,
+                year: 2013,
+                status: "Онгоинг",
+                episodesList: [
+                    { id: 1, number: 1, title: "Ты смотришь, Эрен?", videoUrl: "" },
+                    { id: 2, number: 2, title: "В тот день", videoUrl: "" },
+                    { id: 3, number: 3, title: "Пылающий город", videoUrl: "" }
+                ]
             },
             {
                 id: 3,
                 title: "Ван-Пис",
                 poster: "https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                episodes: 24
+                description: "Монки Д. Луффи мечтает стать Королем Пиратов. Он отправляется в плавание, собирает команду и ищет легендарное сокровище Ван-Пис, оставленное прежним Королем Пиратов Гол Д. Роджером.",
+                genre: ["Приключения", "Комедия", "Фэнтези"],
+                episodes: 24,
+                rating: 8.8,
+                year: 1999,
+                status: "Онгоинг",
+                episodesList: [
+                    { id: 1, number: 1, title: "Я - Луффи! Парень, который станет Королем Пиратов!", videoUrl: "" },
+                    { id: 2, number: 2, title: "Великий мечник появляется! Пират-охотник Ророноа Зоро", videoUrl: "" },
+                    { id: 3, number: 3, title: "Морган против Луффи! Кто эта таинственная девчонка?", videoUrl: "" }
+                ]
             },
             {
                 id: 4,
                 title: "Блич",
                 poster: "https://images.unsplash.com/photo-1518707399486-6d702a84ff00?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                episodes: 16
+                description: "Ичиго Куросаки - подросток, способный видеть призраков. Однажды он встречает синигами Рукию Кучики, которая передает ему свои силы. Теперь Ичиго должен защищать людей от злых духов и проводить души в загробный мир.",
+                genre: ["Боевые искусства", "Приключения", "Сверхъестественное"],
+                episodes: 16,
+                rating: 8.1,
+                year: 2004,
+                status: "Завершен",
+                episodesList: [
+                    { id: 1, number: 1, title: "День, когда я стал синигами", videoUrl: "" },
+                    { id: 2, number: 2, title: "Работа синигами", videoUrl: "" },
+                    { id: 3, number: 3, title: "Желание старшей сестры", videoUrl: "" }
+                ]
             }
         ];
         
+        // Сохраняем начальные данные
+        saveAnimeData();
+        
         // Админ пароль (хранится в коде)
-        const ADMIN_PASSWORD = "youkaistadmin123";
+        const ADMIN_PASSWORD = "vexeradubadmin123";
         
         // Элементы DOM
         const mainPage = document.getElementById('main-page');
+        const animePage = document.getElementById('anime-page');
         const adminPage = document.getElementById('admin-page');
         const adminLoginPage = document.getElementById('admin-login-page');
         const adminLink = document.getElementById('admin-link');
         const backToMain = document.getElementById('back-to-main');
+        const backToMainFromAnime = document.getElementById('back-to-main-from-anime');
+        const backToMainFromDetails = document.getElementById('back-to-main-from-details');
         const logoutBtn = document.getElementById('logout-btn');
         const loginBtn = document.getElementById('login-btn');
         const adminPasswordInput = document.getElementById('admin-password');
         const animeContainer = document.getElementById('anime-container');
+        const popularContainer = document.getElementById('popular-container');
+        const animeDetailsContainer = document.getElementById('anime-details-container');
         const animeForm = document.getElementById('anime-form');
         const episodeForm = document.getElementById('episode-form');
         const episodeAnimeSelect = document.getElementById('episode-anime');
@@ -708,6 +1062,17 @@
         const notification = document.getElementById('notification');
         const adminTabs = document.querySelectorAll('.admin-tab');
         const tabContents = document.querySelectorAll('.tab-content');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        
+        // Текущее выбранное аниме для просмотра
+        let currentAnime = null;
+        let currentEpisode = null;
+        
+        // Сохранение данных в localStorage
+        function saveAnimeData() {
+            localStorage.setItem('vexeraAnimeData', JSON.stringify(animeData));
+        }
         
         // Инициализация приложения
         function initApp() {
@@ -718,20 +1083,16 @@
         // Рендеринг списка аниме
         function renderAnimeList() {
             animeContainer.innerHTML = '';
-            animeData.forEach(anime => {
-                const animeCard = document.createElement('div');
-                animeCard.className = 'anime-card';
-                animeCard.innerHTML = `
-                    <img src="${anime.poster}" alt="${anime.title}" class="anime-poster">
-                    <div class="anime-info">
-                        <h3>${anime.title}</h3>
-                        <div class="episodes">
-                            <i class="fas fa-play-circle"></i>
-                            <span>${anime.episodes} серий</span>
-                        </div>
-                    </div>
-                `;
-                animeContainer.appendChild(animeCard);
+            popularContainer.innerHTML = '';
+            
+            // Для новых добавлений
+            animeData.slice(0, 4).forEach(anime => {
+                animeContainer.appendChild(createAnimeCard(anime));
+            });
+            
+            // Для популярных (перемешаем для разнообразия)
+            [...animeData].sort(() => Math.random() - 0.5).slice(0, 4).forEach(anime => {
+                popularContainer.appendChild(createAnimeCard(anime));
             });
             
             // Заполнение выпадающего списка для добавления серий
@@ -754,16 +1115,195 @@
                         <h3>${anime.title}</h3>
                         <div class="episodes">
                             <i class="fas fa-play-circle"></i>
-                            <span>${anime.episodes} серий</span>
+                            <span>${anime.episodesList.length} серий</span>
                         </div>
                         <div style="margin-top: 10px; display: flex; gap: 5px;">
-                            <button class="btn" style="padding: 5px 10px; font-size: 0.8rem;"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-accent" style="padding: 5px 10px; font-size: 0.8rem;"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-small edit-anime" data-id="${anime.id}"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-small btn-accent delete-anime" data-id="${anime.id}"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
                 `;
                 adminAnimeContainer.appendChild(animeCard);
             });
+            
+            // Добавляем обработчики для кнопок управления
+            document.querySelectorAll('.edit-anime').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const animeId = parseInt(this.getAttribute('data-id'));
+                    // Реализуйте редактирование здесь
+                    showNotification('Редактирование аниме будет реализовано в следующей версии', 'success');
+                });
+            });
+            
+            document.querySelectorAll('.delete-anime').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const animeId = parseInt(this.getAttribute('data-id'));
+                    if (confirm('Вы уверены, что хотите удалить это аниме?')) {
+                        animeData = animeData.filter(a => a.id !== animeId);
+                        saveAnimeData();
+                        renderAnimeList();
+                        showNotification('Аниме успешно удалено', 'success');
+                    }
+                });
+            });
+        }
+        
+        // Создание карточки аниме
+        function createAnimeCard(anime) {
+            const animeCard = document.createElement('div');
+            animeCard.className = 'anime-card';
+            animeCard.innerHTML = `
+                <div class="vexera-badge">VexeraDubbing</div>
+                <img src="${anime.poster}" alt="${anime.title}" class="anime-poster">
+                <div class="anime-info">
+                    <h3>${anime.title}</h3>
+                    <div class="episodes">
+                        <i class="fas fa-play-circle"></i>
+                        <span>${anime.episodesList.length} серий</span>
+                    </div>
+                </div>
+            `;
+            
+            // Добавляем обработчик клика для открытия страницы аниме
+            animeCard.addEventListener('click', () => {
+                showAnimeDetails(anime.id);
+            });
+            
+            return animeCard;
+        }
+        
+        // Показать детали аниме
+        function showAnimeDetails(animeId) {
+            currentAnime = animeData.find(a => a.id === animeId);
+            if (!currentAnime) return;
+            
+            renderAnimeDetails();
+            animePage.classList.remove('hidden');
+            mainPage.classList.add('hidden');
+        }
+        
+        // Рендеринг страницы аниме
+        function renderAnimeDetails() {
+            if (!currentAnime) return;
+            
+            animeDetailsContainer.innerHTML = `
+                <div class="anime-details">
+                    <div class="anime-header">
+                        <img src="${currentAnime.poster}" alt="${currentAnime.title}" class="anime-poster-large">
+                        <div class="anime-meta">
+                            <h1>${currentAnime.title}</h1>
+                            <div class="rating">
+                                <i class="fas fa-star" style="color: gold;"></i>
+                                <span>${currentAnime.rating}</span>
+                            </div>
+                            <div class="info">
+                                <div><i class="fas fa-calendar-alt"></i> ${currentAnime.year} г.</div>
+                                <div><i class="fas fa-film"></i> ${currentAnime.episodesList.length} серий</div>
+                                <div><i class="fas fa-tag"></i> ${currentAnime.status}</div>
+                            </div>
+                            <div class="genres">
+                                ${currentAnime.genre.map(g => `<span class="genre">${g}</span>`).join('')}
+                            </div>
+                            <p class="description">${currentAnime.description}</p>
+                            <div>
+                                <button class="btn"><i class="fas fa-play"></i> Смотреть с 1 серии</button>
+                                <button class="btn" style="background: rgba(255,255,255,0.1);"><i class="fas fa-heart"></i> В избранное</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-container">
+                    <h3 style="margin-bottom: 1rem;">Плеер</h3>
+                    <div class="video-player">
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <p>Выберите серию для просмотра</p>
+                        </div>
+                    </div>
+                    <div class="player-controls">
+                        <div class="episode-nav">
+                            <button class="btn btn-small" id="prev-episode"><i class="fas fa-arrow-left"></i> Предыдущая</button>
+                            <button class="btn btn-small" id="next-episode">Следующая <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div>
+                            <button class="btn btn-small"><i class="fas fa-cog"></i> Настройки</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="episodes-list">
+                    <h3>Список серий</h3>
+                    <div class="episodes-grid" id="episodes-container">
+                        ${currentAnime.episodesList.map(ep => `
+                            <div class="episode-card" data-episode-id="${ep.id}">
+                                <div class="episode-thumb" style="background: linear-gradient(to bottom right, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)});"></div>
+                                <div class="episode-info">
+                                    <h4>${ep.number}. ${ep.title || `Серия ${ep.number}`}</h4>
+                                    <div class="ep-number">Серия ${ep.number}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Добавляем обработчики для серий
+            document.querySelectorAll('.episode-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const episodeId = parseInt(this.getAttribute('data-episode-id'));
+                    selectEpisode(episodeId);
+                });
+            });
+            
+            // Обработчики для навигации по сериям
+            document.getElementById('prev-episode')?.addEventListener('click', () => {
+                if (!currentEpisode) return;
+                const currentIndex = currentAnime.episodesList.findIndex(ep => ep.id === currentEpisode.id);
+                if (currentIndex > 0) {
+                    selectEpisode(currentAnime.episodesList[currentIndex - 1].id);
+                }
+            });
+            
+            document.getElementById('next-episode')?.addEventListener('click', () => {
+                if (!currentEpisode) return;
+                const currentIndex = currentAnime.episodesList.findIndex(ep => ep.id === currentEpisode.id);
+                if (currentIndex < currentAnime.episodesList.length - 1) {
+                    selectEpisode(currentAnime.episodesList[currentIndex + 1].id);
+                }
+            });
+        }
+        
+        // Выбор серии для просмотра
+        function selectEpisode(episodeId) {
+            if (!currentAnime) return;
+            
+            currentEpisode = currentAnime.episodesList.find(ep => ep.id === episodeId);
+            if (!currentEpisode) return;
+            
+            // Обновляем активную серию
+            document.querySelectorAll('.episode-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`.episode-card[data-episode-id="${episodeId}"]`).classList.add('active');
+            
+            // Обновляем плеер
+            const player = document.querySelector('.video-player');
+            player.innerHTML = `
+                <div class="video-placeholder">
+                    <i class="fas fa-play-circle"></i>
+                    <h3>${currentAnime.title} - Серия ${currentEpisode.number}</h3>
+                    <p>${currentEpisode.title || ''}</p>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn"><i class="fas fa-play"></i> Смотреть сейчас</button>
+                    </div>
+                </div>
+            `;
+            
+            // Прокручиваем к плееру
+            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
         // Настройка обработчиков событий
@@ -774,6 +1314,16 @@
             });
             
             backToMain.addEventListener('click', (e) => {
+                e.preventDefault();
+                showMainPage();
+            });
+            
+            backToMainFromAnime.addEventListener('click', (e) => {
+                e.preventDefault();
+                showMainPage();
+            });
+            
+            backToMainFromDetails.addEventListener('click', (e) => {
                 e.preventDefault();
                 showMainPage();
             });
@@ -820,11 +1370,48 @@
                     loginToAdmin();
                 }
             });
+            
+            // Поиск аниме
+            searchBtn.addEventListener('click', searchAnime);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchAnime();
+                }
+            });
+        }
+        
+        // Поиск аниме
+        function searchAnime() {
+            const query = searchInput.value.toLowerCase().trim();
+            if (!query) {
+                renderAnimeList();
+                return;
+            }
+            
+            const filteredAnime = animeData.filter(anime => 
+                anime.title.toLowerCase().includes(query) ||
+                anime.description.toLowerCase().includes(query) ||
+                anime.genre.some(g => g.toLowerCase().includes(query))
+            );
+            
+            // Очищаем контейнеры
+            animeContainer.innerHTML = '';
+            popularContainer.innerHTML = '';
+            
+            // Показываем результаты поиска
+            if (filteredAnime.length === 0) {
+                animeContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Ничего не найдено</p>';
+            } else {
+                filteredAnime.forEach(anime => {
+                    animeContainer.appendChild(createAnimeCard(anime));
+                });
+            }
         }
         
         // Показать страницу логина админа
         function showAdminLogin() {
             mainPage.classList.add('hidden');
+            animePage.classList.add('hidden');
             adminPage.classList.add('hidden');
             adminLoginPage.classList.remove('hidden');
             adminPasswordInput.value = '';
@@ -834,13 +1421,17 @@
         // Показать главную страницу
         function showMainPage() {
             mainPage.classList.remove('hidden');
+            animePage.classList.add('hidden');
             adminPage.classList.add('hidden');
             adminLoginPage.classList.add('hidden');
+            searchInput.value = '';
+            renderAnimeList();
         }
         
         // Показать админ панель
         function showAdminPanel() {
             mainPage.classList.add('hidden');
+            animePage.classList.add('hidden');
             adminPage.classList.remove('hidden');
             adminLoginPage.classList.add('hidden');
         }
@@ -873,11 +1464,18 @@
                 poster: poster,
                 description: description,
                 genre: genre.split(',').map(g => g.trim()),
-                episodes: 0
+                episodes: 0,
+                rating: (Math.random() * 2 + 7).toFixed(1),
+                year: new Date().getFullYear(),
+                status: "Онгоинг",
+                episodesList: []
             };
             
-            // Добавляем в массив (в реальном приложении здесь был бы запрос к серверу)
+            // Добавляем в массив
             animeData.push(newAnime);
+            
+            // Сохраняем в localStorage
+            saveAnimeData();
             
             // Обновляем интерфейс
             renderAnimeList();
@@ -900,8 +1498,22 @@
             const anime = animeData.find(a => a.id === animeId);
             
             if (anime) {
-                // Увеличиваем счетчик серий
-                anime.episodes++;
+                // Создаем новую серию
+                const newEpisode = {
+                    id: Date.now(),
+                    number: episodeNumber,
+                    title: episodeTitle,
+                    videoUrl: episodeUrl
+                };
+                
+                // Добавляем серию
+                anime.episodesList.push(newEpisode);
+                
+                // Обновляем счетчик серий
+                anime.episodes = anime.episodesList.length;
+                
+                // Сохраняем в localStorage
+                saveAnimeData();
                 
                 // Обновляем интерфейс
                 renderAnimeList();
