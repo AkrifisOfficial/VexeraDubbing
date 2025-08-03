@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DubClub - Лучшая озвучка аниме</title>
+    <title>Youkai Studio - Лучшая озвучка аниме</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -467,7 +467,7 @@
                 <div class="header-content">
                     <div class="logo">
                         <i class="fas fa-dragon" style="font-size: 2.5rem; color: var(--primary);"></i>
-                        <h1>DubClub</h1>
+                        <h1>Youkai Studio</h1>
                     </div>
                     <nav>
                         <ul>
@@ -483,7 +483,7 @@
         
         <section class="hero">
             <div class="container">
-                <h2>Лучшая озвучка аниме от DubClub</h2>
+                <h2>Лучшая озвучка аниме от Youkai Studio</h2>
                 <p>Смотрите любимые аниме в профессиональной озвучке с регулярными обновлениями и высоким качеством перевода. Только эксклюзивный контент!</p>
                 <a href="#" class="btn btn-accent">Смотреть сейчас</a>
             </div>
@@ -523,7 +523,7 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-discord"></i></a>
                     </div>
-                    <p class="copyright">© 2023 DubClub. Все права на озвучку принадлежат DubClub. Весь видеоконтент принадлежит их правообладателям.</p>
+                    <p class="copyright">© 2025 Youkai Studio. Все права на озвучку принадлежат DubClub. Весь видеоконтент принадлежит их правообладателям.</p>
                 </div>
             </div>
         </footer>
@@ -536,7 +536,7 @@
                 <div class="header-content">
                     <div class="logo">
                         <i class="fas fa-dragon" style="font-size: 2.5rem; color: var(--primary);"></i>
-                        <h1>DubClub Админ</h1>
+                        <h1>Youkai Studio Админ</h1>
                     </div>
                     <nav>
                         <ul>
@@ -640,8 +640,293 @@
                 <div class="header-content">
                     <div class="logo">
                         <i class="fas fa-dragon" style="font-size: 2.5rem; color: var(--primary);"></i>
-                        <h1>DubClub Админ</h1>
+                        <h1>Youkai Studio Админ</h1>
                     </div>
                 </div>
             </div>
-        </hea
+        </header>
+        
+        <div class="container">
+            <div class="admin-login">
+                <h3><i class="fas fa-lock"></i> Вход в админ панель</h3>
+                <div class="password-input">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="admin-password" placeholder="Введите пароль администратора">
+                </div>
+                <button id="login-btn" class="btn">Войти</button>
+                <p style="margin-top: 1rem; color: #a0a0c0;">Пароль хранится в коде: "youkaistadmin123"</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные приложения
+        const animeData = [
+            {
+                id: 1,
+                title: "Наруто: Ураганные хроники",
+                poster: "https://images.unsplash.com/photo-1633327941347-6cea1a6cf354?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                episodes: 12
+            },
+            {
+                id: 2,
+                title: "Атака титанов",
+                poster: "https://images.unsplash.com/photo-1635189779577-555debfa5d0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                episodes: 8
+            },
+            {
+                id: 3,
+                title: "Ван-Пис",
+                poster: "https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                episodes: 24
+            },
+            {
+                id: 4,
+                title: "Блич",
+                poster: "https://images.unsplash.com/photo-1518707399486-6d702a84ff00?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                episodes: 16
+            }
+        ];
+        
+        // Админ пароль (хранится в коде)
+        const ADMIN_PASSWORD = "youkaistadmin123";
+        
+        // Элементы DOM
+        const mainPage = document.getElementById('main-page');
+        const adminPage = document.getElementById('admin-page');
+        const adminLoginPage = document.getElementById('admin-login-page');
+        const adminLink = document.getElementById('admin-link');
+        const backToMain = document.getElementById('back-to-main');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const adminPasswordInput = document.getElementById('admin-password');
+        const animeContainer = document.getElementById('anime-container');
+        const animeForm = document.getElementById('anime-form');
+        const episodeForm = document.getElementById('episode-form');
+        const episodeAnimeSelect = document.getElementById('episode-anime');
+        const adminAnimeContainer = document.getElementById('admin-anime-container');
+        const notification = document.getElementById('notification');
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Инициализация приложения
+        function initApp() {
+            renderAnimeList();
+            setupEventListeners();
+        }
+        
+        // Рендеринг списка аниме
+        function renderAnimeList() {
+            animeContainer.innerHTML = '';
+            animeData.forEach(anime => {
+                const animeCard = document.createElement('div');
+                animeCard.className = 'anime-card';
+                animeCard.innerHTML = `
+                    <img src="${anime.poster}" alt="${anime.title}" class="anime-poster">
+                    <div class="anime-info">
+                        <h3>${anime.title}</h3>
+                        <div class="episodes">
+                            <i class="fas fa-play-circle"></i>
+                            <span>${anime.episodes} серий</span>
+                        </div>
+                    </div>
+                `;
+                animeContainer.appendChild(animeCard);
+            });
+            
+            // Заполнение выпадающего списка для добавления серий
+            episodeAnimeSelect.innerHTML = '<option value="">-- Выберите аниме --</option>';
+            animeData.forEach(anime => {
+                const option = document.createElement('option');
+                option.value = anime.id;
+                option.textContent = anime.title;
+                episodeAnimeSelect.appendChild(option);
+            });
+            
+            // Рендеринг аниме для управления в админке
+            adminAnimeContainer.innerHTML = '';
+            animeData.forEach(anime => {
+                const animeCard = document.createElement('div');
+                animeCard.className = 'anime-card';
+                animeCard.innerHTML = `
+                    <img src="${anime.poster}" alt="${anime.title}" class="anime-poster">
+                    <div class="anime-info">
+                        <h3>${anime.title}</h3>
+                        <div class="episodes">
+                            <i class="fas fa-play-circle"></i>
+                            <span>${anime.episodes} серий</span>
+                        </div>
+                        <div style="margin-top: 10px; display: flex; gap: 5px;">
+                            <button class="btn" style="padding: 5px 10px; font-size: 0.8rem;"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-accent" style="padding: 5px 10px; font-size: 0.8rem;"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                adminAnimeContainer.appendChild(animeCard);
+            });
+        }
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            adminLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAdminLogin();
+            });
+            
+            backToMain.addEventListener('click', (e) => {
+                e.preventDefault();
+                showMainPage();
+            });
+            
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAdminLogin();
+            });
+            
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginToAdmin();
+            });
+            
+            animeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                addNewAnime();
+            });
+            
+            episodeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                addNewEpisode();
+            });
+            
+            adminTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Удаляем активный класс у всех вкладок
+                    adminTabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущей вкладке
+                    tab.classList.add('active');
+                    
+                    // Скрываем все содержимое вкладок
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Показываем содержимое активной вкладки
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+            
+            // Обработчик для поля пароля (Enter)
+            adminPasswordInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    loginToAdmin();
+                }
+            });
+        }
+        
+        // Показать страницу логина админа
+        function showAdminLogin() {
+            mainPage.classList.add('hidden');
+            adminPage.classList.add('hidden');
+            adminLoginPage.classList.remove('hidden');
+            adminPasswordInput.value = '';
+            adminPasswordInput.focus();
+        }
+        
+        // Показать главную страницу
+        function showMainPage() {
+            mainPage.classList.remove('hidden');
+            adminPage.classList.add('hidden');
+            adminLoginPage.classList.add('hidden');
+        }
+        
+        // Показать админ панель
+        function showAdminPanel() {
+            mainPage.classList.add('hidden');
+            adminPage.classList.remove('hidden');
+            adminLoginPage.classList.add('hidden');
+        }
+        
+        // Логин в админ панель
+        function loginToAdmin() {
+            const password = adminPasswordInput.value;
+            
+            if (password === ADMIN_PASSWORD) {
+                showAdminPanel();
+                showNotification('Успешный вход в админ панель!', 'success');
+            } else {
+                showNotification('Неверный пароль! Попробуйте снова.', 'error');
+                adminPasswordInput.value = '';
+                adminPasswordInput.focus();
+            }
+        }
+        
+        // Добавление нового аниме
+        function addNewAnime() {
+            const title = document.getElementById('anime-title').value;
+            const poster = document.getElementById('anime-poster').value;
+            const description = document.getElementById('anime-description').value;
+            const genre = document.getElementById('anime-genre').value;
+            
+            // Создаем объект нового аниме
+            const newAnime = {
+                id: Date.now(), // Генерируем уникальный ID
+                title: title,
+                poster: poster,
+                description: description,
+                genre: genre.split(',').map(g => g.trim()),
+                episodes: 0
+            };
+            
+            // Добавляем в массив (в реальном приложении здесь был бы запрос к серверу)
+            animeData.push(newAnime);
+            
+            // Обновляем интерфейс
+            renderAnimeList();
+            
+            // Очищаем форму
+            animeForm.reset();
+            
+            // Показываем уведомление
+            showNotification(`Аниме "${title}" успешно добавлено!`, 'success');
+        }
+        
+        // Добавление новой серии
+        function addNewEpisode() {
+            const animeId = parseInt(episodeAnimeSelect.value);
+            const episodeNumber = parseInt(document.getElementById('episode-number').value);
+            const episodeTitle = document.getElementById('episode-title').value;
+            const episodeUrl = document.getElementById('episode-url').value;
+            
+            // Находим аниме
+            const anime = animeData.find(a => a.id === animeId);
+            
+            if (anime) {
+                // Увеличиваем счетчик серий
+                anime.episodes++;
+                
+                // Обновляем интерфейс
+                renderAnimeList();
+                
+                // Очищаем форму
+                episodeForm.reset();
+                
+                // Показываем уведомление
+                showNotification(`Серия #${episodeNumber} для "${anime.title}" успешно добавлена!`, 'success');
+            }
+        }
+        
+        // Показать уведомление
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Инициализация приложения после загрузки DOM
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
