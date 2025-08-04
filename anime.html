@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Эпизоды аниме</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="anime-title"></h1>
+    </header>
+    
+    <section id="episodes-list" class="episodes-container">
+        <!-- Эпизоды будут загружены из Firebase -->
+    </section>
+    
+    <div id="player-container" style="display:none;"></div>
+
+    <script src="scripts/db.js"></script>
+    <script src="scripts/player.js"></script>
+    <script>
+        // Получение ID аниме из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const animeId = urlParams.get('id');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const anime = await db.collection("anime").doc(animeId).get();
+            document.getElementById('anime-title').textContent = anime.data().title;
+            
+            const episodes = await loadEpisodes(animeId);
+            renderEpisodes(episodes);
+        });
+
+        function renderEpisodes(episodes) {
+            const container = document.getElementById('episodes-list');
+            episodes.forEach(ep => {
+                const epElement = document.createElement('div');
+                epElement.className = 'episode-card';
+                epElement.innerHTML = `
+                    <h3>Серия ${ep.episodeNumber}</h3>
+                `;
+                epElement.addEventListener('click', () => {
+                    document.getElementById('player-container').style.display = 'flex';
+                    renderPlayer(ep.videoUrl);
+                });
+                container.appendChild(epElement);
+            });
+        }
+
+        // Закрытие плеера при клике вне окна
+        document.getElementById('player-container').addEventListener('click', (e) => {
+            if(e.target.id === 'player-container') {
+                e.target.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
