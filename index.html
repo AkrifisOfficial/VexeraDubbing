@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VexeraDubbing - Главная</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>VexeraDubbing</h1>
+    </header>
+    
+    <section id="anime-list" class="anime-container">
+        <!-- Аниме будет загружено из Firebase -->
+    </section>
+    
+    <footer>
+        <a href="admin.html">Админ-панель</a>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="scripts/db.js"></script>
+    <script src="scripts/player.js"></script>
+    <script>
+        // Загрузка аниме
+        document.addEventListener('DOMContentLoaded', async () => {
+            const animeList = await loadAnime();
+            renderAnimeList(animeList);
+        });
+    </script>
+</body>
+</html>
