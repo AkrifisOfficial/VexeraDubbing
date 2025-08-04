@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="admin-login">
+        <h2>Вход в админ-панель</h2>
+        <input type="password" id="admin-password" placeholder="Пароль">
+        <button onclick="loginAdmin()">Войти</button>
+    </div>
+    
+    <div id="admin-panel" style="display:none;">
+        <h2>Добавить новое аниме</h2>
+        <input type="text" id="anime-title" placeholder="Название">
+        <input type="text" id="anime-image" placeholder="URL изображения">
+        <button onclick="addAnime()">Добавить</button>
+        
+        <h2>Добавить серию</h2>
+        <select id="anime-select"></select>
+        <input type="number" id="episode-number" placeholder="Номер серии">
+        <input type="text" id="episode-url" placeholder="URL видео (YouTube/VK)">
+        <button onclick="addEpisode()">Добавить</button>
+    </div>
+
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/admin.js"></script>
+</body>
+</html>
